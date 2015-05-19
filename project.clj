@@ -31,14 +31,14 @@
 ;;enable to start the nREPL server when the application launches
 ;:env {:repl-port 7001}
 
+  :env {:repl-port 7001}
+
   :main corenlpd.core
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
             [lein-ancient "0.6.5"]
             ]
-
-
 
   :ring {:handler corenlpd.handler/app
          :init    corenlpd.handler/init
@@ -47,25 +47,19 @@
          :auto-reload? true
          :auto-refresh? true
          :port 8080
-         ::reload-paths ["src"]
-         }
-
-
-
+         :reload-paths ["src"]
+         :stacktraces? true
+         :open-browser? false}
 
   :profiles
   {:uberjar {:omit-source true
              :env {:production true}
-
              :aot :all}
    :dev {:dependencies [[ring-mock "0.1.5"]
                         [ring/ring-devel "1.3.2"]
                         [pjstadig/humane-test-output "0.7.0"]
                         ]
          :source-paths ["env/dev/clj"]
-
-
-
          :repl-options {:init-ns corenlpd.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]

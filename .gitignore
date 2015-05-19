@@ -9,3 +9,4 @@ pom.xml
 /.env
 *.log
 corenlpd.log
+.nrepl-port

@@ -10,14 +10,26 @@
             [ring.util.response :refer [response content-type]]
             [clojure.java.io :as io]))
 
+(defn route-parse [request type]
+   (let [text (get (:params request) :text)
+         xml (parser/parse text :parse-full)]
+         (-> xml
+            response
+            (content-type "text/xml"))))
+
 (defroutes home-routes
   (GET* "/parse" []
     :return       String
     :query-params [text :- String]
     :summary      "Process some text through Core NLP."
-    (fn [req]
-     (let [text (get (:params req) :text)
-           xml (parser/parse text)]
-           (-> xml
-              response
-              (content-type "text/xml"))))))
+    (fn [req] (route-parse req :parse-full)))
+
+
+  ; TODO: Unfinished
+  (GET* "/parse-with-pos" []
+    :return       String
+    :query-params [text :- String]
+    :summary      "Process some text that has parts of speech
+                  tagged at the end of each word through Core NLP.
+                  Format: Word/POS"
+    (fn [req] (route-parse req :parse-with-pos))))
