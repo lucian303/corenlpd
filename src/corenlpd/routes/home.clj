@@ -3,25 +3,21 @@
     (java.io StringReader StringWriter)
     (edu.stanford.nlp.pipeline Annotation StanfordCoreNLP))
   (:require [corenlpd.layout :as layout]
+            [corenlpd.parser :as parser]
             [compojure.core :refer [defroutes GET]]
+            [compojure.api.sweet :refer [GET*]]
             [ring.util.http-response :refer [ok]]
+            [ring.util.response :refer [response content-type]]
             [clojure.java.io :as io]))
 
-(defn home-page []
-  (layout/render
-    "home.html" {:docs (-> "docs/docs.md" io/resource slurp)}))
-
-(defn parse [text]
-  (let [an (Annotation. text)
-        pipeline (StanfordCoreNLP.)
-        output (StringWriter.)]
-    (.annotate pipeline an)
-    (.xmlPrint pipeline an output)
-    (.toString output)))
-
 (defroutes home-routes
-  (GET "/" [] (home-page))
-  (GET "/parse" []
+  (GET* "/parse" []
+    :return       String
+    :query-params [text :- String]
+    :summary      "Process some text through Core NLP."
     (fn [req]
-     (let [text (get (:params req) :text)]
-                (parse text)))))
+     (let [text (get (:params req) :text)
+           xml (parser/parse text)]
+           (-> xml
+              response
+              (content-type "text/xml"))))))

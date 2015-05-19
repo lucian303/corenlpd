@@ -1,7 +1,7 @@
-(defproject corenlpd "0.1.0-SNAPSHOT"
+(defproject corenlpd "0.1.0"
 
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Stanford CoreNLP HTTP Server"
+  :url "http://github.com/lucian303/corenlpd"
 
   :dependencies [[org.clojure/clojure "1.7.0-beta3"]
                  [selmer "0.8.2"]
@@ -43,7 +43,12 @@
   :ring {:handler corenlpd.handler/app
          :init    corenlpd.handler/init
          :destroy corenlpd.handler/destroy
-         :uberwar-name "corenlpd.war"}
+         :uberwar-name "corenlpd.war"
+         :auto-reload? true
+         :auto-refresh? true
+         :port 8080
+         ::reload-paths ["src"]
+         }
 
 
 
