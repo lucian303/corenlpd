@@ -10,3 +10,4 @@ pom.xml
 *.log
 corenlpd.log
 .nrepl-port
+.idea

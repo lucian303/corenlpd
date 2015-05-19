@@ -1,7 +1,4 @@
 (ns corenlpd.routes.home
-  (:import
-    (java.io StringReader StringWriter)
-    (edu.stanford.nlp.pipeline Annotation StanfordCoreNLP))
   (:require [corenlpd.layout :as layout]
             [corenlpd.parser :as parser]
             [compojure.core :refer [defroutes GET]]
