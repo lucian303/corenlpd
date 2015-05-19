@@ -1,6 +1,6 @@
 # corenlpd
 
-An HTTP REST server frontend for Stanford Core NLP (http://nlp.stanford.edu/software/corenlp.shtml)
+An HTTP REST server frontend for Stanford Core NLP written in Clojure (http://nlp.stanford.edu/software/corenlp.shtml)
 
 ## Prerequisites
 
