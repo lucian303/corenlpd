@@ -5,22 +5,19 @@
     (edu.stanford.nlp.pipeline Annotation StanfordCoreNLP))
   (:require [compojure.api.sweet :refer [GET*]]))
 
-(defn get-annotators-by-type [type]
-  (case type
-    :parse-full "tokenize, ssplit, pos, lemma, parse"
-    :parse-with-pos "parse"))
+(def annotators-by-type {:parse-full "tokenize, ssplit, pos, lemma, parse"})
 
 (defn get-props [type]
   (let [props (Properties.)]
-    (.setProperty props "annotators" (get-annotators-by-type type))
+    (.setProperty props "annotators" (type annotators-by-type))
     props))
 
 (defn parse [text type]
   "Parse some text using Stanford CoreNLP"
-  (let [an (Annotation. text)
+  (let [annot (Annotation. text)
         props (get-props type)
         pipeline (StanfordCoreNLP. props)
         output (StringWriter.)]
-    (.annotate pipeline an)
-    (.xmlPrint pipeline an output)
+    (.annotate pipeline annot)
+    (.xmlPrint pipeline annot output)
     (.toString output)))
