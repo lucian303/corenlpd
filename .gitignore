@@ -8,6 +8,6 @@ pom.xml
 /.lein-*
 /.env
 *.log
-corenlpd.log
 .nrepl-port
 .idea
+corenlpd.iml
