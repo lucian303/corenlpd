@@ -16,7 +16,12 @@ Add a user for the service (as root):
 
 	sudo adduser --disabled-password --gecos "" corenlpd
 
-Add corenlpd to sudoers (as root):
+Add corenlpd to sudoers.d (as root):
+
+	sudo sh -c "echo \"corenlpd ALL=NOPASSWD: /usr/local/bin/corenlpd/target/corenlpd.jar\" >> /etc/sudoers.d/corenlpd"
+	sudo chmod 0440 /etc/sudoers.d/corenlpd
+
+**OR** add corenlpd to suders directly (as root):
 
 	sudo sh -c "echo \"corenlpd ALL=NOPASSWD: /usr/local/bin/corenlpd/target/corenlpd.jar\" >> /etc/sudoers"
 
