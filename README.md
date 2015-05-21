@@ -10,9 +10,19 @@ You will need [Leiningen][1] 2.0 or above installed.
 
 ## Running
 
-To start a web server for the application, run:
+To run as a server:
 
     lein ring server
+
+## Installation
+
+To install copy source to /usr/local/bin/corenlpd (or change path in corenlpd.conf) and run:
+
+	lein uberjar
+
+Then copy corenlpd.conf to /etc/init and run:
+
+	service corenlpd start
 
 ## License
 
