@@ -1,5 +1,7 @@
 # corenlpd
 
+[![Build Status](https://travis-ci.org/lucian303/corenlpd.svg?branch=master)](https://travis-ci.org/lucian303/corenlpd)
+
 An HTTP REST server frontend for [Stanford Core NLP](http://nlp.stanford.edu/software/corenlp.shtml) written in Clojure using the [Luminus](http://www.luminusweb.net/) framework.
 
 ## Prerequisites
