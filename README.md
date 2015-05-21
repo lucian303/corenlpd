@@ -57,6 +57,8 @@ It takes one argument, ```text``` and returns the parsed XML:
 
 	GET /parse?text=This+is+a+sentence.
 
+By default, the server runs on port ```5900```.
+
 ## License
 
 See LICENSE.md
