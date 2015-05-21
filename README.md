@@ -14,15 +14,11 @@ To install copy source to ```/usr/local/bin/corenlpd``` (or change path in ```co
 
 Add a user for the service (as root):
 
-	adduser corenlpd
-
- Edit sudoers (as root):
-
-	visudo
+	sudo adduser --disabled-password --gecos "" corenlpd
 
 Add corenlpd to sudoers (as root):
 
-	corenlpd ALL=NOPASSWD: /usr/local/bin/corenlpd/target/corenlpd.jar
+	sudo sh -c "echo \"corenlpd ALL=NOPASSWD: /usr/local/bin/corenlpd/target/corenlpd.jar\" >> /etc/sudoers"
 
 (Or remove the ```setuid``` and ```setgid``` entries in ```corenlpd.conf``` and run as the invoking user at your own risk.)
 
