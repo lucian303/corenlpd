@@ -4,9 +4,7 @@ An HTTP REST server frontend for [Stanford Core NLP](http://nlp.stanford.edu/sof
 
 ## Prerequisites
 
-You will need [Leiningen][1] 2.0 or above installed.
-
-[1]: https://github.com/technomancy/leiningen
+You will need [Leiningen](http://leiningen.org/) 2.0 or above installed.
 
 ## Installation
 
@@ -26,7 +24,7 @@ Add corenlpd to sudoers (as root):
 
 	corenlpd ALL=NOPASSWD: /usr/local/bin/corenlpd/target/corenlpd.jar
 
-Or remove the ```setuid``` and ```setgid``` entries in ```corenlpd.conf``` and run as the invoking user at your own risk.
+(Or remove the ```setuid``` and ```setgid``` entries in ```corenlpd.conf``` and run as the invoking user at your own risk.)
 
 Then copy ```corenlpd.conf``` to ```/etc/init``` to install the [Upstart](http://upstart.ubuntu.com/) job and run:
 
