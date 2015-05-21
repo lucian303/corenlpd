@@ -10,7 +10,7 @@ You will need [Leiningen](http://leiningen.org/) 2.0 or above installed.
 
 ## Installation
 
-To install copy source to ```/usr/local/bin/corenlpd``` (or change path in ```corenlpd.conf```) and run:
+To install as an Upstart service, copy source to ```/usr/local/bin/corenlpd``` (or change path in ```corenlpd.conf```) and run:
 
 	lein uberjar
 
