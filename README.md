@@ -44,6 +44,16 @@ Or:
 
 	lein test
 
+## API
+
+Currently, there is one endpoint:
+
+	GET /parse
+
+It takes one argument, ```text``` and returns the parsed XML:
+
+	GET /parse?text=This+is+a+sentence.
+
 ## License
 
 See LICENSE.md
