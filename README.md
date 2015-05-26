@@ -61,6 +61,6 @@ By default, the server runs on port ```5900```.
 
 ## License
 
-See LICENSE.md
+MIT (See LICENSE)
 
 Copyright © 2015 Lucian Hontau
