@@ -1,23 +1,26 @@
 (ns corenlpd.routes.services
   (:require [compojure.core :refer [defroutes]]
             [compojure.api.sweet :refer :all]
-            [corenlpd.parser :as parser]
-            [ring.util.response :refer [response content-type]]))
+            [corenlpd.parser :refer :all]
+            [ring.util.response :refer [response content-type]]
+            [clj-json [core :as json]]))
 
-(defn set-xml-content-type [data]
+(def content-types {:xml "text/xml"
+                    :json "application/json"})
+
+(defn send-response [data type]
   (-> data
     response
-    (content-type "text/xml")))
+    (content-type (type content-types))))
 
 (defroutes service-routes
   (GET* "/parse" []
         :return       String
         :query-params [text :- String]
         :summary      "Process some text through Core NLP."
-        (set-xml-content-type (parser/parse text :parse-full)))
-
+        (send-response (parse text :parse-full) :xml))
   (GET* "/parse-with-pos" []
-        :return       String
+        :return String
         :query-params [text :- String]
         :summary      "Process some text already tagged with parts of speech through Core NLP."
-        (parser/parse-with-pos text :englishPCFG)))
+        (send-response (json/generate-string (parse-with-pos text :englishPCFG)) :json)))

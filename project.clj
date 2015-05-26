@@ -20,7 +20,8 @@
                  [metosin/compojure-api "0.20.1"]
                  [metosin/ring-swagger-ui "2.1.1-M2"]
                  [edu.stanford.nlp/stanford-corenlp "3.5.2"]
-                 [edu.stanford.nlp/stanford-corenlp "3.5.2" :classifier "models"]]
+                 [edu.stanford.nlp/stanford-corenlp "3.5.2" :classifier "models"]
+                 [clj-json "0.5.3"]]
 
   :min-lein-version "2.0.0"
   :uberjar-name "corenlpd.jar"
