@@ -1,5 +1,4 @@
 (defproject corenlpd "0.1.0"
-
   :description "Stanford CoreNLP HTTP Server"
   :url "http://github.com/lucian303/corenlpd"
 
@@ -21,22 +20,20 @@
                  [metosin/compojure-api "0.20.1"]
                  [metosin/ring-swagger-ui "2.1.1-M2"]
                  [edu.stanford.nlp/stanford-corenlp "3.5.2"]
-                 [edu.stanford.nlp/stanford-corenlp "3.5.2"
-                  :classifier "models"]]
+                 [edu.stanford.nlp/stanford-corenlp "3.5.2" :classifier "models"]]
 
   :min-lein-version "2.0.0"
   :uberjar-name "corenlpd.jar"
   :jvm-opts ["-server"]
 
-;;start the nREPL server when the application launches
+  ;; Start the nREPL server when the application launches
   :env {:repl-port 7001}
 
   :main corenlpd.core
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
-            [lein-ancient "0.6.5"]
-            ]
+            [lein-ancient "0.6.5"]]
 
   :ring {:handler corenlpd.handler/app
          :init    corenlpd.handler/init

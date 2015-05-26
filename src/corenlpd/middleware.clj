@@ -12,9 +12,7 @@
             [ring.middleware.session-timeout :refer [wrap-idle-session-timeout]]
             [ring.middleware.session.memory :refer [memory-store]]
             [ring.middleware.format :refer [wrap-restful-format]]
-            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            
-            ))
+            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]))
 
 (defn wrap-servlet-context [handler]
   (fn [request]
@@ -53,7 +51,6 @@
 (defn wrap-base [handler]
   (-> handler
       wrap-dev
-      
       (wrap-idle-session-timeout
         {:timeout (* 60 30)
          :timeout-response (redirect "/")})
