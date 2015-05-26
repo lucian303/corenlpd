@@ -27,13 +27,10 @@
     (.xmlPrint pipeline annot output)
     (.toString output)))
 
-(defn parse-with-pos
-  "Reparse text already tagged with slashes and parts of speech to get
-  updated relationships. Words and relationships should be seperated by
-  a slash '/'. There should be a space between all words and punctuation."
+(defn parse-with-pos-raw
   [text model]
   (let [parser (. LexicalizedParser loadModel (model models) [])
-        tokens (split text #"(\s|/)")
+        tokens (split text #"(\s+|/)")
         words (take-nth 2 tokens)
         tags (take-nth 2 (rest tokens))
         tagged-words (zipmap words tags)
@@ -44,4 +41,21 @@
           output (StringWriter.)
           pw (PrintWriter. output false)]
     (.printTree tp tree pw)
-    (.toString output))))
+    (split (.toString output) #"\n\n"))))
+
+(defn parse-words [sentence]
+  (let [words (split sentence #"\s+")]
+    (map #(split % #"/") words)))
+
+;; TODO: Finish implementing algorithm that returns deps as list
+(defn parse-deps [deps]
+  deps)
+
+(defn parse-with-pos
+  "Reparse text already tagged with slashes and parts of speech to get
+  updated relationships. Words and relationships should be seperated by
+  a slash '/'. There should be a space between all words and punctuation."
+  [text model]
+  (let [[sentence deps] (parse-with-pos-raw text model)]
+    {:wordsAndTags (parse-words sentence)
+     :typedDependencies (parse-deps deps)}))
