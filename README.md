@@ -43,21 +43,28 @@ Or:
 
 	lein run
 
+By default, the server runs on port ```5900```.
+
 ## Testing
 
 	lein test
 
 ## API
 
-Currently, there is one endpoint:
+### Endpoints
 
-	GET /parse
+#### GET /parse
 
 It takes one argument, ```text``` and returns the parsed XML:
 
 	GET /parse?text=This+is+a+sentence.
 
-By default, the server runs on port ```5900```.
+#### GET /parse-with-pos
+
+It takes one argument, ```text``` and returns the parsed XML. The argument must have POS tags seperated by a slash:
+
+	GET /parse-with-pos?text=Document/VB+software/NN+./.
+
 
 ## License
 
