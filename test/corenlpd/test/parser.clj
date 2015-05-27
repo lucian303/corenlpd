@@ -11,5 +11,5 @@
 
   (testing "parse-with-pos"
     (let [response (parse-with-pos "Document/VB software/NN ./." :englishPCFG)]
-      (is (= '{:wordsAndTags (["Document" "VB"] ["software" "NN"] ["." "."]), :typedDependencies ({:type "root", :deps [{:feature "ROOT", :index "0"} {:feature "Document", :index "1"}]} {:type "dobj", :deps [{:feature "Document", :index "1"} {:feature "software", :index "2"}]})}
+      (is (= '{:wordsAndTags (["Document" "VB"] ["software" "NN"] ["." "."]), :typedDependencies ({:type "root", 0 {:feature "ROOT", :index "0"}, 1 {:feature "Document", :index "1"}} {:type "dobj", 0 {:feature "Document", :index "1"}, 1 {:feature "software", :index "2"}})}
              response)))))
