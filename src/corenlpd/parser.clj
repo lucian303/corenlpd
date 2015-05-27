@@ -11,7 +11,9 @@
 
 (def models {:englishPCFG "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz"})
 
-(defn get-props [type]
+(defn get-props
+  "Get a properties object with the right annotators value."
+  [type]
   (let [props (Properties.)]
     (.setProperty props "annotators" (type annotators-by-type))
     props))
@@ -28,6 +30,7 @@
     (.toString output)))
 
 (defn parse-with-pos-raw
+  "Given a sentence with POS tags, send it to the parser for reparsing."
   [text model]
   (let [parser (. LexicalizedParser loadModel (model models) [])
         tokens (split text #"(\s+|/)")
@@ -43,13 +46,25 @@
     (.printTree tp tree pw)
     (split (.toString output) #"\n\n"))))
 
-(defn parse-words [sentence]
+(defn parse-words
+  "Parse all words into vectors."
+  [sentence]
   (let [words (split sentence #"\s+")]
     (map #(split % #"/") words)))
 
-;; TODO: Finish implementing algorithm that returns deps as list
-(defn parse-deps [deps]
-  deps)
+(defn get-dependency
+  "Get each dependency as a map in our expected output format."
+  [dep]
+  {:type (nth dep 1)
+     {:feature (nth dep 2)
+      :index (nth dep 3)}
+     {:feature (nth dep 4)
+      :index (nth dep 5)}})
+
+(defn parse-deps
+  "Parse dependencies from their parenthesized form into hashmaps."
+  [deps]
+  (map get-dependency (re-seq #"(?m)^(\S+)\((\S+)-(\d), (\S+)-(\d)\)(\n*)" deps)))
 
 (defn parse-with-pos
   "Reparse text already tagged with slashes and parts of speech to get
