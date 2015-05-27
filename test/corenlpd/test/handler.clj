@@ -4,8 +4,12 @@
         corenlpd.handler))
 
 (deftest test-app
-  (testing "main nlp route"
+  (testing "/parse"
     (let [response (app (request :get "/parse?text=This+is+a+test."))]
+      (is (= 200 (:status response)))))
+
+  (testing "/parse-with-pos"
+    (let [response (app (request :get "/parse-with-pos?text=Document/VB+software/NN+./."))]
       (is (= 200 (:status response)))))
 
   (testing "not-found route"
