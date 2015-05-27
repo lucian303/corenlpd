@@ -56,10 +56,8 @@
   "Get each dependency as a map in our expected output format."
   [dep]
   {:type (nth dep 1)
-     {:feature (nth dep 2)
-      :index (nth dep 3)}
-     {:feature (nth dep 4)
-      :index (nth dep 5)}})
+     {:feature (nth dep 2) :index (nth dep 3)}
+     {:feature (nth dep 4) :index (nth dep 5)}})
 
 (defn parse-deps
   "Parse dependencies from their parenthesized form into hashmaps."
