@@ -36,7 +36,7 @@
         tokens (split text #"(\s+|/)")
         words (take-nth 2 tokens)
         tags (take-nth 2 (rest tokens))
-        tagged-words (zipmap words tags)
+        tagged-words (map vector words tags)
         sentence (ArrayList.)]
     (dorun (map (fn [[key val]] (.add sentence (TaggedWord. key val))) (seq tagged-words)))
     (let [tree (.parse parser sentence)
