@@ -10,6 +10,6 @@
              response))))
 
   (testing "parse-with-pos"
-    (let [response (parse-with-pos "Document/VB software/NN ./." :englishPCFG)]
-      (is (= '{:wordsAndTags (["Document" "VB"] ["software" "NN"] ["." "."]), :typedDependencies ({:type "root", 0 {:feature "ROOT", :index 0}, 1 {:feature "Document", :index 1}} {:type "dobj", 0 {:feature "Document", :index 1}, 1 {:feature "software", :index 2}})}
+    (let [response (parse-with-pos "Apply/VB asset/NN protection/NN mechanisms/NNS for/IN all/DT assets/NNS according/VBG to/TO their/PRP$ assigned/VBN Asset/NNP Classification/NN Policy/NN ./. " :englishPCFG)]
+      (is (= '{:wordsAndTags (["Apply" "VB" "asset" "NN"] ["protection" "NN" "mechanisms" "NNS"] ["for" "IN" "all" "DT"] ["assets" "NNS" "according" "VBG"] ["to" "TO" "their" "PRP$"] ["assigned" "VBN" "Asset" "NNP"] ["Classification" "NN" "Policy" "NN"]), :typedDependencies ({:type "nsubj", 0 {:feature "assets/NNS", :index 4}, 1 {:feature "Apply/VB", :index 1}} {:type "dep", 0 {:feature "assets/NNS", :index 4}, 1 {:feature "protection/NN", :index 2}} {:type "dep", 0 {:feature "assets/NNS", :index 4}, 1 {:feature "for/IN", :index 3}} {:type "root", 0 {:feature "ROOT", :index 0}, 1 {:feature "assets/NNS", :index 4}} {:type "dep", 0 {:feature "assets/NNS", :index 4}, 1 {:feature "to/TO", :index 5}} {:type "dep", 0 {:feature "assets/NNS", :index 4}, 1 {:feature "assigned/VBN", :index 6}} {:type "dep", 0 {:feature "assets/NNS", :index 4}, 1 {:feature "Classification/NN", :index 7}})}
              response)))))
