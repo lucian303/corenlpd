@@ -33,7 +33,7 @@
   "Given a sentence with POS tags, send it to the parser for reparsing."
   [text model]
   (let [parser (. LexicalizedParser loadModel (model models) [])
-        tokens (split text #"(\s+|\$|/)")
+        tokens (split text #"((\s+\$*)+|/)")
         words (take-nth 2 tokens)
         tags (take-nth 2 (rest tokens))
         tagged-words (map vector words tags)
