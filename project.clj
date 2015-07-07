@@ -1,4 +1,4 @@
-(defproject corenlpd "0.3.4"
+(defproject corenlpd "0.3.5"
   :description "Stanford CoreNLP HTTP Server"
   :url "http://github.com/lucian303/corenlpd"
 
