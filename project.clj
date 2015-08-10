@@ -63,7 +63,7 @@
          :env {:dev true}}}
 
   :aws {:beanstalk
-        {:environments [{:name "dev"}
-                        {:name "prod"}]
+        {:environments [{:name "corenlpd-dev"}
+                        {:name "corenlpd-prod"}]
           :region "eu-west-1"}})
 
