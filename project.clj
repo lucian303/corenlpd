@@ -28,9 +28,7 @@
   :jvm-opts ["-server"]
 
   ;; Start the nREPL server when the application launches
-  :env {:port 80
-        :repl-port 7001
-        :dev false}
+  :env {:repl-port 7001}
 
   :main corenlpd.core
 
