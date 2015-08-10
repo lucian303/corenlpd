@@ -34,7 +34,8 @@
 
   :plugins [[lein-ring "0.9.1"]
             [lein-environ "1.0.0"]
-            [lein-ancient "0.6.5"]]
+            [lein-ancient "0.6.5"]
+            [lein-beanstalk "0.2.7"]]
 
   :ring {:handler corenlpd.handler/app
          :init    corenlpd.handler/init
@@ -59,4 +60,10 @@
          :repl-options {:init-ns corenlpd.core}
          :injections [(require 'pjstadig.humane-test-output)
                       (pjstadig.humane-test-output/activate!)]
-         :env {:dev true}}})
+         :env {:dev true}}}
+
+  :aws {:beanstalk
+        {:environments [{:name "dev"}
+                        {:name "prod"}]}
+        {:region "eu-west-1"}})
+
