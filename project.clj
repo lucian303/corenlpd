@@ -64,6 +64,6 @@
 
   :aws {:beanstalk
         {:environments [{:name "dev"}
-                        {:name "prod"}]}
-        {:region "eu-west-1"}})
+                        {:name "prod"}]
+          :region "eu-west-1"}})
 
