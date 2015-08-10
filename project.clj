@@ -65,5 +65,5 @@
   :aws {:beanstalk
         {:environments [{:name "corenlpd-dev"}
                         {:name "corenlpd-prod"}]
-          :region "eu-west-1"}})
+          :region "us-west-1"}})
 
