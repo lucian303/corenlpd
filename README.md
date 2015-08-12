@@ -10,6 +10,8 @@ You will need [Leiningen](http://leiningen.org/) 2.0 or above installed.
 
 ## Installation
 
+You can install this on a normal machine or run it on AWS Elastic Beanstalk (see below).
+
 To install as an Upstart service, copy source to ```/usr/local/bin/corenlpd``` (or change path in ```corenlpd.conf```) and run:
 
 	lein uberjar
@@ -37,6 +39,12 @@ Then copy ```corenlpd.conf``` to ```/etc/init``` to install the [Upstart](http:/
 
 	service corenlpd start
 
+## AWS Elastic Beanstalk Installation
+
+You'll need to create a Tomcat 8 / Java 8 AWS environment (otherwise it'll default to Java 7 and fail). Then run:
+
+	lein beanstalk deploy {$beanstalk-environment-name}
+
 ## Running
 
 To run as a server:
@@ -57,13 +65,13 @@ By default, the server runs on port ```5900```.
 
 ### Endpoints
 
-#### GET /parse
+#### `GET /parse`
 
 It takes one argument, ```text``` and returns the parsed XML:
 
 	GET /parse?text=This+is+a+sentence.
 
-#### GET /parse-with-pos
+#### `GET /parse-with-pos`
 
 It takes one argument, ```text``` and returns the parsed XML. The argument must have POS tags seperated by a slash:
 
