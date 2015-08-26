@@ -31,10 +31,6 @@ Add corenlpd to sudoers.d (as root):
 
 (Or remove the ```setuid``` and ```setgid``` entries in ```corenlpd.conf``` and run as the invoking user at your own risk.)
 
-Assign ownership of the app directory to the ```corenlpd``` user.
-
-	sudo chown -R corenlpd:corenlpd /usr/local/bin/corenlpd
-
 Then copy ```corenlpd.conf``` to ```/etc/init``` to install the [Upstart](http://upstart.ubuntu.com/) job and run:
 
 	service corenlpd start
