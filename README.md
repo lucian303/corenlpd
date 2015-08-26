@@ -51,7 +51,7 @@ Or:
 
 	lein run
 
-By default, the server runs on port ```5900```.
+By default, the server runs on port ```5900``` for testing. In production, set the `PORT` environment variable.
 
 ## Testing
 
