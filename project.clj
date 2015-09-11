@@ -65,5 +65,5 @@
   :aws {:beanstalk
         {:environments [{:name "corenlpd-dev"}
                         {:name "corenlpd-prod"}]
-         :region "us-east-1"
+         :region "us-west-1"
          :s3-bucket "corenlpd"}})
