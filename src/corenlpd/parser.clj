@@ -69,6 +69,9 @@
   updated relationships. Words and relationships should be seperated by
   a slash '/'. There should be a space between all words and punctuation."
   [text model]
-  (let [[sentence deps] (parse-with-pos-raw text model)]
-    {:wordsAndTags (parse-words sentence)
-     :typedDependencies (parse-deps deps)}))
+    (try
+      (let [[sentence deps] (parse-with-pos-raw text model)]
+        {:wordsAndTags (parse-words sentence)
+         :typedDependencies (parse-deps deps)
+         :success true})
+      (catch Exception e {:success false})))
