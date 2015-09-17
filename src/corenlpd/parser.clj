@@ -87,7 +87,6 @@
   a slash '/'. There should be a space between all words and punctuation."
   [text model]
     (try
-      (throw (Exception. "test ex"))
       (let [[sentence deps] (parse-with-pos-raw text model)]
         {:wordsAndTags (parse-words sentence)
          :typedDependencies (parse-deps deps)
