@@ -1,5 +1,9 @@
 (ns corenlpd.parser
-  (:require [clojure.string :refer [split]])
+  (:require [clojure.string :refer [split]]
+            [environ.core :refer [env]]
+            [raven-clj.core :refer [capture]]
+            [raven-clj.interfaces :refer [stacktrace]]
+            [taoensso.timbre :as timbre])
   (:import (java.io StringWriter PrintWriter)
     (java.util Properties ArrayList)
     (edu.stanford.nlp.ling TaggedWord)
@@ -18,16 +22,29 @@
     (.setProperty props "annotators" (type annotators-by-type))
     props))
 
+(defn return-and-log-error
+  "Log the error and return the unsuccessful JSON object."
+  [e]
+  (let [msg "Error running the NLP parser."]
+    (timbre/error msg)
+    ;; TODO: Change to a timbre appender if needed elsewhere
+    (capture (env :sentry-url)
+             (-> {:message msg}
+                 (stacktrace e ["corenlpd.parser"]))))
+  {:success false})
+
 (defn parse
   "Parse some text using Stanford CoreNLP"
   [text type]
-  (let [annot (Annotation. text)
-        props (get-props type)
-        pipeline (StanfordCoreNLP. props)
-        output (StringWriter.)]
-    (.annotate pipeline annot)
-    (.xmlPrint pipeline annot output)
-    (.toString output)))
+  (try
+    (let [annot (Annotation. text)
+          props (get-props type)
+          pipeline (StanfordCoreNLP. props)
+          output (StringWriter.)]
+      (.annotate pipeline annot)
+      (.xmlPrint pipeline annot output)
+      (.toString output))
+    (catch Exception e (return-and-log-error e))))
 
 (defn parse-with-pos-raw
   "Given a sentence with POS tags, send it to the parser for reparsing."
@@ -69,6 +86,9 @@
   updated relationships. Words and relationships should be seperated by
   a slash '/'. There should be a space between all words and punctuation."
   [text model]
-  (let [[sentence deps] (parse-with-pos-raw text model)]
-    {:wordsAndTags (parse-words sentence)
-     :typedDependencies (parse-deps deps)}))
+    (try
+      (let [[sentence deps] (parse-with-pos-raw text model)]
+        {:wordsAndTags (parse-words sentence)
+         :typedDependencies (parse-deps deps)
+         :success true})
+      (catch Exception e (return-and-log-error e))))
