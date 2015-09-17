@@ -10,8 +10,6 @@
     (edu.stanford.nlp.parser.lexparser LexicalizedParser)
     (edu.stanford.nlp.trees TreePrint)))
 
-(def dsn (env :sentry-url))
-
 (def annotators-by-type {:parse-full "tokenize, ssplit, pos, lemma, parse"})
 
 (def models {:englishPCFG "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz"})
@@ -26,7 +24,7 @@
 (defn return-and-log-error
   "Log the error and return the unsuccessful JSON object."
   []
-  (capture dsn
+  (capture (env :sentry-url)
            (-> {:message "Error running the NLP parser."}
                (stacktrace (Exception.) ["corenlpd.parser"])))
   {:success false})
