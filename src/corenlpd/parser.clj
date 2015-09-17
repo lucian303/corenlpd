@@ -2,7 +2,8 @@
   (:require [clojure.string :refer [split]]
             [environ.core :refer [env]]
             [raven-clj.core :refer [capture]]
-            [raven-clj.interfaces :refer [stacktrace]])
+            [raven-clj.interfaces :refer [stacktrace]]
+            [taoensso.timbre :as timbre])
   (:import (java.io StringWriter PrintWriter)
     (java.util Properties ArrayList)
     (edu.stanford.nlp.ling TaggedWord)
@@ -24,9 +25,12 @@
 (defn return-and-log-error
   "Log the error and return the unsuccessful JSON object."
   [e]
-  (capture (env :sentry-url)
-           (-> {:message "Error running the NLP parser."}
-               (stacktrace e ["corenlpd.parser"])))
+  (let [msg "Error running the NLP parser."]
+    (timbre/error msg)
+    ;; TODO: Change to a timbre appender if needed elsewhere
+    (capture (env :sentry-url)
+             (-> {:message msg}
+                 (stacktrace e ["corenlpd.parser"]))))
   {:success false})
 
 (defn parse
