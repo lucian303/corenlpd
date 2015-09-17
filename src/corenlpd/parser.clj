@@ -23,10 +23,10 @@
 
 (defn return-and-log-error
   "Log the error and return the unsuccessful JSON object."
-  []
+  [e]
   (capture (env :sentry-url)
            (-> {:message "Error running the NLP parser."}
-               (stacktrace (Exception.) ["corenlpd.parser"])))
+               (stacktrace e ["corenlpd.parser"])))
   {:success false})
 
 (defn parse
@@ -40,7 +40,7 @@
       (.annotate pipeline annot)
       (.xmlPrint pipeline annot output)
       (.toString output))
-    (catch Exception e (return-and-log-error))))
+    (catch Exception e (return-and-log-error e))))
 
 (defn parse-with-pos-raw
   "Given a sentence with POS tags, send it to the parser for reparsing."
@@ -83,8 +83,9 @@
   a slash '/'. There should be a space between all words and punctuation."
   [text model]
     (try
+      (throw (Exception. "test ex"))
       (let [[sentence deps] (parse-with-pos-raw text model)]
         {:wordsAndTags (parse-words sentence)
          :typedDependencies (parse-deps deps)
          :success true})
-      (catch Exception e (return-and-log-error))))
+      (catch Exception e (return-and-log-error e))))
