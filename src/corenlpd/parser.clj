@@ -1,11 +1,16 @@
 (ns corenlpd.parser
-  (:require [clojure.string :refer [split]])
+  (:require [clojure.string :refer [split]]
+            [environ.core :refer [env]]
+            [raven-clj.core :refer [capture]]
+            [raven-clj.interfaces :refer [stacktrace]])
   (:import (java.io StringWriter PrintWriter)
     (java.util Properties ArrayList)
     (edu.stanford.nlp.ling TaggedWord)
     (edu.stanford.nlp.pipeline Annotation StanfordCoreNLP)
     (edu.stanford.nlp.parser.lexparser LexicalizedParser)
     (edu.stanford.nlp.trees TreePrint)))
+
+(def dsn (env :sentry-url))
 
 (def annotators-by-type {:parse-full "tokenize, ssplit, pos, lemma, parse"})
 
@@ -18,16 +23,26 @@
     (.setProperty props "annotators" (type annotators-by-type))
     props))
 
+(defn return-and-log-error
+  "Log the error and return the unsuccessful JSON object."
+  []
+  (capture dsn
+           (-> {:message "Error running the NLP parser."}
+               (stacktrace (Exception.) ["corenlpd.parser"])))
+  {:success false})
+
 (defn parse
   "Parse some text using Stanford CoreNLP"
   [text type]
-  (let [annot (Annotation. text)
-        props (get-props type)
-        pipeline (StanfordCoreNLP. props)
-        output (StringWriter.)]
-    (.annotate pipeline annot)
-    (.xmlPrint pipeline annot output)
-    (.toString output)))
+  (try
+    (let [annot (Annotation. text)
+          props (get-props type)
+          pipeline (StanfordCoreNLP. props)
+          output (StringWriter.)]
+      (.annotate pipeline annot)
+      (.xmlPrint pipeline annot output)
+      (.toString output))
+    (catch Exception e (return-and-log-error))))
 
 (defn parse-with-pos-raw
   "Given a sentence with POS tags, send it to the parser for reparsing."
@@ -74,4 +89,4 @@
         {:wordsAndTags (parse-words sentence)
          :typedDependencies (parse-deps deps)
          :success true})
-      (catch Exception e {:success false})))
+      (catch Exception e (return-and-log-error))))

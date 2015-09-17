@@ -21,7 +21,8 @@
                  [metosin/ring-swagger-ui "2.1.1-M2"]
                  [edu.stanford.nlp/stanford-corenlp "3.5.2"]
                  [edu.stanford.nlp/stanford-corenlp "3.5.2" :classifier "models"]
-                 [clj-json "0.5.3"]]
+                 [clj-json "0.5.3"]
+                 [raven-clj "1.3.1"]]
 
   :min-lein-version "2.0.0"
   :uberjar-name "corenlpd.jar"
