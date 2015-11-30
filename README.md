@@ -35,11 +35,24 @@ Then copy ```corenlpd.conf``` to ```/etc/init``` to install the [Upstart](http:/
 
 	service corenlpd start
 
-## AWS Elastic Beanstalk Installation
+## AWS Elastic Beanstalk Deployment
 
-You'll need to create a Tomcat 8 / Java 8 AWS environment (otherwise it'll default to Java 7 and fail). Then run:
+See the documentation for environment variables and the command line needed to set them. These only need to be set once.
 
-	lein beanstalk deploy {$beanstalk-environment-name}
+You'll need to create a Tomcat 8 / Java 8 AWS environment (otherwise it'll default to Java 7 and fail). After than, when you have the repo, switch to the `master` branch and:
+
+    eb init
+
+Choose `us-east-1` for the region and `corenlpd` for the app (change as needed). The `init` and `use` steps only have to be done once.
+
+    eb use corenlpd-prod
+    lein beanstalk deploy corenlpd-prod
+
+Please make sure you're in the `master` branch when deploying to avoid deploying the wrong branch! After the first deploy, from the `master` branch just do:
+
+    lein beanstalk deploy corenlpd-prod
+
+Note that lein must be used for deployment. `eb deploy` does not properly set things up to run this Clojure app as it assumes a Java app.
 
 ## Running
 
