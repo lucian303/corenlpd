@@ -43,9 +43,9 @@ You'll need to create a Tomcat 8 / Java 8 AWS environment (otherwise it'll defau
 
     eb init
 
-Choose `us-east-1` for the region and `corenlpd` for the app (change as needed). The `init` and `use` steps only have to be done once.
+Choose `us-east-1` for the region and `corenlpd` for the app (change as needed). The `init` and `create` steps only have to be done once.
 
-    eb use corenlpd-prod
+    eb create corenlpd-prod
     lein beanstalk deploy corenlpd-prod
 
 Please make sure you're in the `master` branch when deploying to avoid deploying the wrong branch! After the first deploy, from the `master` branch just do:
