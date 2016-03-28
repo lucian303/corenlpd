@@ -31,6 +31,7 @@ ENV LEIN_ROOT 1
 RUN ./lein uberjar
 
 # Expose ports
+ENV port 5900
 EXPOSE 5900
 
-CMD PORT=5900 java -jar /usr/local/bin/corenlpd/target/corenlpd.jar
+CMD java -jar /usr/local/bin/corenlpd/target/corenlpd.jar
