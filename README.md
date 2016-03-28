@@ -56,6 +56,12 @@ Note that lein must be used for deployment. `eb deploy` does not properly set th
 
 ## Running
 
+### Docker
+
+Build and run a container from the attached Dockerfile.
+
+### Manually
+
 To run as a server:
 
     lein ring server
