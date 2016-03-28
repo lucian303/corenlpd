@@ -1,0 +1,5 @@
+target/
+projectFilesBackup/
+.elasticbeanstalk/
+.idea/
+.ebextensions/

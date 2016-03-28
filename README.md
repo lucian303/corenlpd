@@ -10,6 +10,10 @@ You will need [Leiningen](http://leiningen.org/) 2.0 or above installed.
 
 ## Installation
 
+See 'Running' section below for instructions on building and running the docker image.
+
+### Manual Install
+
 You can install this on a normal machine or run it on AWS Elastic Beanstalk (see below).
 
 To install as an Upstart service, copy source to ```/usr/local/bin/corenlpd``` (or change path in ```corenlpd.conf```) and run:
@@ -37,14 +41,32 @@ Then copy ```corenlpd.conf``` to ```/etc/init``` to install the [Upstart](http:/
 
 ## AWS Elastic Beanstalk Deployment
 
+### Docker
+
+To deploy on AWS Elastic Beanstalk with Docker:
+
+    eb init
+
+Select Docker as the application type and create a new environment:
+
+    eb create --vpc corenlpd-docker-prod
+
+Use `--vpc` to create a Beanstalk app with an internal load balancer that'd not exposed to the Internet.
+
+    eb use corenlpd-docker prod
+    eb deploy
+
+### Regular (Tomcat 8)
+
 See the documentation for environment variables and the command line needed to set them. These only need to be set once.
 
 You'll need to create a Tomcat 8 / Java 8 AWS environment (otherwise it'll default to Java 7 and fail). After than, when you have the repo, switch to the `master` branch and:
 
     eb init
 
-Choose `us-east-1` for the region and `corenlpd` for the app (change as needed). The `init` and `use` steps only have to be done once.
+Choose `us-east-1` for the region and `corenlpd` for the app (change as needed). The `init`, `create`, and `use` steps only have to be done once.
 
+    eb create corenlpd-prod
     eb use corenlpd-prod
     lein beanstalk deploy corenlpd-prod
 
@@ -55,6 +77,18 @@ Please make sure you're in the `master` branch when deploying to avoid deploying
 Note that lein must be used for deployment. `eb deploy` does not properly set things up to run this Clojure app as it assumes a Java app.
 
 ## Running
+
+### Docker
+
+Build:
+
+    docker build -t corenlpd .
+
+Run:
+
+    docker run -d --name corenlpd -p 5900:5900 corenlpd
+
+### Manually
 
 To run as a server:
 
@@ -91,4 +125,4 @@ It takes one argument, ```text``` and returns the parsed XML. The argument must 
 
 MIT (See LICENSE)
 
-Copyright © 2015 Lucian Hontau
+Copyright © 2016 Lucian Hontau
