@@ -3,6 +3,8 @@ MAINTAINER Lucian Hontau <lhontau@unifiedcompliance.com>
 
 # Init
 ENV DEBIAN_FRONTEND=noninteractive
+RUN mkdir -p /tmp/corenlpd
+WORKDIR /tmp/corenlpd
 
 # System Deps
 RUN apt-get install -y \
@@ -17,21 +19,24 @@ RUN apt-get install -y \
     oracle-java8-installer \
     wget
 
-# Copy files
-RUN mkdir -p /usr/local/bin/corenlpd
-COPY . /usr/local/bin/corenlpd
-WORKDIR /usr/local/bin/corenlpd
-
 # Leiningen
 RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 RUN chmod 755 lein
 ENV LEIN_ROOT 1
 
+# Copy files
+COPY . /tmp/corenlpd
+
 # Build jar
 RUN ./lein uberjar
+RUN cp -f /tmp/corenlpd/target/corenlpd.jar /usr/local/bin/corenlpd.jar
+
+# Cleanup
+WORKDIR /var/log
+RUN rm -rf /tmp/corenlpd
 
 # Expose ports
 ENV port 5900
 EXPOSE 5900
 
-CMD java -jar /usr/local/bin/corenlpd/target/corenlpd.jar
+CMD java -jar /usr/local/bin/corenlpd.jar

@@ -1,0 +1,11 @@
+version: '2'
+services:
+  corenlpd:
+    build:
+      context: .
+    ports:
+      - 5900:5900
+    volumes:
+      - .:/usr/local/bin/corenlpd
+    environment:
+      - SENTRY_URL=https://x:y@app.getsentry.com/z
