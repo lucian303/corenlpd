@@ -2,7 +2,6 @@ FROM frolvlad/alpine-oraclejdk8:slim
 MAINTAINER Lucian Hontau <lhontau@unifiedcompliance.com>
 
 # Init
-ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir -p /tmp/corenlpd
 WORKDIR /tmp/corenlpd
 
