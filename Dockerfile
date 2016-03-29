@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM frolvlad/alpine-oraclejdk8:slim
 MAINTAINER Lucian Hontau <lhontau@unifiedcompliance.com>
 
 # Init
@@ -7,20 +7,15 @@ RUN mkdir -p /tmp/corenlpd
 WORKDIR /tmp/corenlpd
 
 # System Deps
-RUN apt-get install -y \
-    software-properties-common
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get update
-# RUN apt-get upgrade -y
-# Accept Java license to avoid prompt
-RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-RUN apt-get install -y \
-    oracle-java8-installer \
+RUN apk update
+RUN apk upgrade
+RUN apk add \
+    bash \
+    ca-certificates \
     wget
 
 # Leiningen
-RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+RUN wget --no-check-certificate https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 RUN chmod 755 lein
 ENV LEIN_ROOT 1
 
@@ -29,7 +24,7 @@ COPY . /tmp/corenlpd
 
 # Build jar
 RUN ./lein uberjar
-RUN cp -f /tmp/corenlpd/target/corenlpd.jar /usr/local/bin/corenlpd.jar
+RUN mv /tmp/corenlpd/target/corenlpd.jar /usr/local/bin/corenlpd.jar
 
 # Cleanup
 WORKDIR /var/log
