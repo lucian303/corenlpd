@@ -1,10 +1,6 @@
 FROM frolvlad/alpine-oraclejdk8:slim
 MAINTAINER Lucian Hontau <lhontau@unifiedcompliance.com>
 
-# Init
-RUN mkdir -p /tmp/corenlpd
-WORKDIR /tmp/corenlpd
-
 # System Deps
 RUN apk update
 RUN apk upgrade
@@ -14,23 +10,22 @@ RUN apk add \
     wget
 
 # Leiningen
+WORKDIR /usr/bin
 RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 RUN chmod 755 lein
 ENV LEIN_ROOT 1
+RUN ./lein
 
 # Copy files
-COPY . /tmp/corenlpd
+RUN mkdir -p /usr/local/bin/corenlpd
+WORKDIR /usr/local/bin/corenlpd
+COPY . /usr/local/bin/corenlpd
 
 # Build jar
-RUN ./lein uberjar
-RUN mv /tmp/corenlpd/target/corenlpd.jar /usr/local/bin/corenlpd.jar
-
-# Cleanup
-WORKDIR /var/log
-RUN rm -rf /tmp/corenlpd
+RUN lein uberjar
 
 # Expose ports
 ENV port 5900
 EXPOSE 5900
 
-CMD java -jar /usr/local/bin/corenlpd.jar
+CMD java -jar /usr/local/bin/corenlpd/target/corenlpd.jar
