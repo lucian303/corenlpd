@@ -15,7 +15,7 @@ RUN apk add \
     wget
 
 # Leiningen
-RUN wget --no-check-certificate https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+RUN wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 RUN chmod 755 lein
 ENV LEIN_ROOT 1
 
