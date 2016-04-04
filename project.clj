@@ -45,7 +45,7 @@
          :uberwar-name "corenlpd.war"
          :auto-reload? true
          :auto-refresh? true
-         :port 8080
+         :port 5900
          :reload-paths ["src"]
          :stacktraces? true
          :open-browser? false}

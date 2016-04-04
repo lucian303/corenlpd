@@ -4,17 +4,26 @@
 
 An HTTP REST server frontend for [Stanford Core NLP](http://nlp.stanford.edu/software/corenlp.shtml) written in Clojure using the [Luminus](http://www.luminusweb.net/) framework.
 
-## Prerequisites
-
-You will need [Leiningen](http://leiningen.org/) 2.0 or above installed.
-
 ## Installation
 
-See 'Running' section below for instructions on building and running the docker image.
+### Docker
+
+From source directory:
+
+    docker build -t corenlpd .
+    docker run -d --name corenlpd -p 5900:5900 corenlpd
+
+### docker-compose
+
+From source directory:
+
+    docker-compose up -d
 
 ### Manual Install
 
 You can install this on a normal machine or run it on AWS Elastic Beanstalk (see below).
+
+You will need [Leiningen](http://leiningen.org/) 2.0 or above installed.
 
 To install as an Upstart service, copy source to ```/usr/local/bin/corenlpd``` (or change path in ```corenlpd.conf```) and run:
 
@@ -76,23 +85,12 @@ Please make sure you're in the `master` branch when deploying to avoid deploying
 
 Note that lein must be used for deployment. `eb deploy` does not properly set things up to run this Clojure app as it assumes a Java app.
 
-## Running
-
-### Docker
-
-Build:
-
-    docker build -t corenlpd .
-
-Run:
-
-    docker run -d --name corenlpd -p 5900:5900 corenlpd
-
-### Manually
+## Running during development
 
 To run as a server:
 
-    lein ring server
+
+
 
 Or:
 
