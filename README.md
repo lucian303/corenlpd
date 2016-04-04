@@ -13,6 +13,12 @@ From source directory:
     docker build -t corenlpd .
     docker run -d --name corenlpd -p 5900:5900 corenlpd
 
+### docker-compose
+
+From source directory:
+
+    docker-compose up -d
+
 ### Manual Install
 
 You can install this on a normal machine or run it on AWS Elastic Beanstalk (see below).
@@ -83,7 +89,8 @@ Note that lein must be used for deployment. `eb deploy` does not properly set th
 
 To run as a server:
 
-    lein ring server
+
+
 
 Or:
 
