@@ -1,0 +1,17 @@
+version: '2'
+services:
+  corenlpd:
+    container_name: corenlpd
+    build:
+      context: .
+    ports:
+      - 5900:5900
+    volumes:
+      - .:/usr/local/bin/corenlpd
+    environment:
+      - SENTRY_URL=https://x:y@app.getsentry.com/z
+    networks:
+      - backend
+
+networks:
+  backend:
