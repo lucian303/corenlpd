@@ -17,9 +17,9 @@ ENV LEIN_ROOT 1
 RUN ./lein
 
 # Copy files
-RUN mkdir -p /usr/local/bin/corenlpd
-WORKDIR /usr/local/bin/corenlpd
-COPY . /usr/local/bin/corenlpd
+RUN mkdir -p /opt/corenlpd
+WORKDIR /opt/corenlpd
+COPY . /opt/corenlpd
 
 # Build jar
 RUN lein uberjar
@@ -28,4 +28,4 @@ RUN lein uberjar
 ENV port 5900
 EXPOSE 5900
 
-CMD java -jar /usr/local/bin/corenlpd/target/corenlpd.jar
+CMD java -jar /opt/corenlpd/target/corenlpd.jar
